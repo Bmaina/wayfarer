@@ -1,0 +1,16 @@
+import { priceAll, verify } from "../lib/pricing";
+import { TripBrief } from "../lib/types";
+const assert = (c: boolean, m: string) => { if (!c) { console.error("FAIL", m); process.exit(1); } console.log("ok  ", m); };
+const base = TripBrief.parse({ travellers: 2, nights: 8, budgetUsd: 9000, priority: "cost", month: "December", interests: [], summary: "test" });
+const ps = priceAll(base);
+const ke = ps.find((p) => p.id === "ke-assembled")!;
+assert(ke.total === 8000, "Kenya assembled for 2 travellers, 8 nights = $8,000 (got " + ke.total + ")");
+assert(ps.length === 6, "six options priced");
+assert(ps.every((p) => p.lines.every((l) => l.status === "estimated")), "every line labelled estimated");
+assert(priceAll({ ...base, travellers: 4 }).find((p) => p.id === "ke-assembled")!.total > ke.total, "price rises with travellers");
+assert(priceAll({ ...base, nights: 10 }).find((p) => p.id === "ke-assembled")!.total > ke.total, "price rises with nights");
+const best = (b: typeof base) => ps.length && priceAll(b).sort((a, c) => c.score - a.score)[0].destId;
+assert(best({ ...base, priority: "time" }) === "rw", "time priority ranks Rwanda first");
+assert(best({ ...base, priority: "cost" }) === "ke", "cost priority ranks Kenya first");
+assert(verify(priceAll({ ...base, budgetUsd: 3000 })[0], { ...base, budgetUsd: 3000 }).ok === false, "over-budget option fails verification");
+assert(verify(ke, base).notes.some((n) => n.includes("No supplier quote")), "verifier always flags missing supplier confirmation");
