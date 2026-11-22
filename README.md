@@ -8,7 +8,9 @@ A multi-agent travel desk for East African safaris, built on Next.js 16 and the 
 
 ![Status](https://img.shields.io/badge/status-prototype-F0B323) ![Next.js](https://img.shields.io/badge/Next.js-16-black) ![AI SDK](https://img.shields.io/badge/Vercel%20AI%20SDK-7-black) ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6) ![Prices](https://img.shields.io/badge/prices-demo%20data-b3402a)
 
-<img src="docs/images/hero-mara.jpg" alt="Zebra and wildebeest on the Maasai Mara plains" width="100%">
+<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeests_in_the_Masaai_Mara.jpg?width=800" alt="Wildebeest in the Maasai Mara" width="100%">
+
+<sub>Photo: DEMOSH, via <a href="https://commons.wikimedia.org/wiki/File:Wildebeests_in_the_Masaai_Mara.jpg">Wikimedia Commons</a>, Creative Commons licence (see file page)</sub>
 
 </div>
 
@@ -140,7 +142,7 @@ lib/
   data.ts                 demonstration destinations and rates (replace with real quotes)
   types.ts                Zod schemas and shared types
 scripts/test-engine.ts    nine engine tests
-docs/                     application notes, photo credits, images
+docs/                     application notes and photo credits
 ```
 
 A few choices worth knowing:
@@ -185,27 +187,22 @@ These are the problems people actually hit.
 
 ## Where it could go: a gallery
 
-These are the places WAYFARER is built to plan. Photo credits are pending, see the note below.
+These are the places WAYFARER is built to plan.
 
 <table>
 <tr>
-<td width="33%"><img src="docs/images/mara-vehicle.jpg" alt="Safari vehicle among wildebeest in the Maasai Mara"><br><sub><b>Maasai Mara, Kenya</b><br>The migration plains</sub></td>
-<td width="33%"><img src="docs/images/amboseli-giraffes.jpg" alt="Giraffes below Mount Kilimanjaro"><br><sub><b>Amboseli, Kenya</b><br>Giraffes beneath Kilimanjaro</sub></td>
-<td width="33%"><img src="docs/images/serengeti-acacia.jpg" alt="A lone acacia on the Serengeti plains"><br><sub><b>Serengeti, Tanzania</b><br>Endless acacia grassland</sub></td>
+<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeests_in_the_Masaai_Mara.jpg?width=800" alt="Wildebeest in the Maasai Mara" width="100%"><br><sub><b>Wildebeest in the Maasai Mara</b><br>Photo: DEMOSH, Creative Commons, via <a href="https://commons.wikimedia.org/wiki/File:Wildebeests_in_the_Masaai_Mara.jpg">Wikimedia Commons</a></sub></td>
+<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeest-during-Great-Migration.JPG?width=800" alt="Wildebeest after crossing the Mara River" width="100%"><br><sub><b>Wildebeest after crossing the Mara River</b><br>Photo: Bjørn Christian Tørrissen, see file page, via <a href="https://commons.wikimedia.org/wiki/File:Wildebeest-during-Great-Migration.JPG">Wikimedia Commons</a></sub></td>
+<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg?width=800" alt="Elephants against Mount Kilimanjaro at Amboseli" width="100%"><br><sub><b>Elephants and Mount Kilimanjaro, Amboseli</b><br>Photo: Amoghavarsha JS, see file page, via <a href="https://commons.wikimedia.org/wiki/File:Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg">Wikimedia Commons</a></sub></td>
 </tr>
 <tr>
-<td><img src="docs/images/ngorongoro-rim.jpg" alt="Ngorongoro Crater seen from the rim"><br><sub><b>Ngorongoro, Tanzania</b><br>The crater from the rim</sub></td>
-<td><img src="docs/images/volcanoes.jpg" alt="A volcano rising above fields in Rwanda"><br><sub><b>Volcanoes National Park, Rwanda</b><br>Home of the mountain gorillas</sub></td>
-<td><img src="docs/images/akagera.jpg" alt="Savanna and lake in Akagera National Park"><br><sub><b>Akagera, Rwanda</b><br>Lakes and savanna</sub></td>
-</tr>
-<tr>
-<td><img src="docs/images/amboseli-elephants.jpg" alt="Elephants below Kilimanjaro at Amboseli"><br><sub><b>Amboseli, Kenya</b><br>Elephants below the mountain</sub></td>
-<td><img src="docs/images/kilimanjaro.jpg" alt="Kilimanjaro rising above the savanna"><br><sub><b>Kilimanjaro</b><br>Seen across the savanna</sub></td>
-<td><img src="docs/images/volcanoes-forest.jpg" alt="Forested volcano slopes in Rwanda"><br><sub><b>Virunga foothills, Rwanda</b><br>Forested slopes</sub></td>
+<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kilimanjaro_from_Amboseli.jpg?width=800" alt="Kilimanjaro seen from Amboseli National Park" width="100%"><br><sub><b>Kilimanjaro from Amboseli National Park</b><br>Photo: Sergey Pesterev, see file page, via <a href="https://commons.wikimedia.org/wiki/File:Kilimanjaro_from_Amboseli.jpg">Wikimedia Commons</a></sub></td>
+<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ngorongoro_Crater.jpg?width=800" alt="Ridge at the edge of the Ngorongoro Crater" width="100%"><br><sub><b>Ridge at the edge of the Ngorongoro Crater</b><br>Photo: William Warby, CC BY 2.0, via <a href="https://commons.wikimedia.org/wiki/File:Ngorongoro_Crater.jpg">Wikimedia Commons</a></sub></td>
+<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/RwandaVolcanoAndLake_cropped2.jpg" alt="A volcano and lake in northwestern Rwanda" width="100%"><br><sub><b>A volcano and lake in northwestern Rwanda</b><br>Photo: Neil Palmer (CIAT), cropped by Amakuru, CC BY-SA 2.0, via <a href="https://commons.wikimedia.org/wiki/File:RwandaVolcanoAndLake_cropped2.jpg">Wikimedia Commons</a></sub></td>
 </tr>
 </table>
 
-> **Photo credits pending.** These images were selected through a Creative Commons filter, but the photographers and licence terms have not yet been recorded. See [docs/PHOTO_CREDITS.md](docs/PHOTO_CREDITS.md). Fill that table in from each photo's source page before making this repository public. Location labels come from the supplied file names and are unverified.
+> **Photo credits.** These photographs come from Wikimedia Commons and are linked, not copied into this repository. Each caption names the photographer and links to the Commons file page, which states the exact licence and any attribution wording. Where a caption says "see file page", I have not confirmed the licence version, so check that page before reusing a photo elsewhere. Details in [docs/PHOTO_CREDITS.md](docs/PHOTO_CREDITS.md). Captions follow the file descriptions on Commons.
 
 ## FAQ
 
