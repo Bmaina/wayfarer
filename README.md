@@ -1,18 +1,24 @@
 <div align="center">
 
-# WAYFARER
-
-### Tell us the trip. Agents do the booking work.
-
-A multi-agent travel desk for East African safaris, built on Next.js 16 and the Vercel AI SDK 7.
+<img src="docs/assets/banner.svg" alt="WAYFARER: a savanna sunset with an acacia tree" width="100%">
 
 ![Status](https://img.shields.io/badge/status-prototype-F0B323) ![Next.js](https://img.shields.io/badge/Next.js-16-black) ![AI SDK](https://img.shields.io/badge/Vercel%20AI%20SDK-7-black) ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6) ![Prices](https://img.shields.io/badge/prices-demo%20data-b3402a)
+
+</div>
+
+> *It is six in the morning. The engine is off. Somewhere out on the plains, thousands of hooves are on the move, and the only thing you organised today is a cup of coffee.*
+>
+> *The lodges, the park fees, the little plane between airstrips, the guide who knows where to be at first light: all of it was arranged before you left home. That is the trip WAYFARER is built to hand you.*
+
+<div align="center">
 
 <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeests_in_the_Masaai_Mara.jpg?width=800" alt="Wildebeest in the Maasai Mara" width="100%">
 
 <sub>Photo: DEMOSH, via <a href="https://commons.wikimedia.org/wiki/File:Wildebeests_in_the_Masaai_Mara.jpg">Wikimedia Commons</a>, Creative Commons licence (see file page)</sub>
 
 </div>
+
+**Jump to:** [The idea](#the-idea-in-one-minute) · [Choose a journey](#choose-your-journey) · [On the map](#the-journeys-on-a-map) · [The agents](#meet-the-agents) · [A sample trip](#a-trip-the-agents-might-hand-you) · [Run it](#quick-start) · [Deploy](#deploy-on-vercel) · [Roadmap](#roadmap) · [FAQ](#faq)
 
 ---
 
@@ -28,6 +34,24 @@ The design rule that makes it trustworthy:
 
 No number you see on screen was written by a language model. Prices, scores and budget checks come from a deterministic, tested engine, and every price carries an **Estimated** label until a supplier confirms it.
 
+## Choose your journey
+
+Paste any of these into the agent desk, or write your own. The demo covers Kenya, Tanzania and Rwanda.
+
+| Journey | Try this brief | Why it is a good test |
+|---|---|---|
+| **The first safari** | *"First safari for two in December. Big wildlife, comfortable lodges, no logistics to manage."* ($9,000, 2 travellers, 8 nights) | The classic. Shows assembled trips against packages. |
+| **Gorillas and savanna** | *"Gorilla trekking and a savanna safari for two, ten days, we do not mind a flight."* | Rwanda's permits change the maths. Try "Least travel time". |
+| **The family adventure** | *"Family of four, two kids, nine nights, easy transfers, nothing too long in a vehicle."* | More travellers means more rooms and vehicles. Watch the totals move. |
+
+## The journeys on a map
+
+Every demo trip starts in Nairobi. Distances below are straight-line from the city to each destination, so real road and flight times are longer.
+
+<div align="center">
+<img src="docs/assets/route-map.svg" alt="Map of East Africa with routes from Nairobi to Maasai Mara, Amboseli, Serengeti and Volcanoes National Park" width="100%">
+</div>
+
 ## Why East Africa, why now
 
 | Signal | What the research found (desk research, November 2026) |
@@ -42,20 +66,9 @@ WAYFARER earns by taking the agent's commission on completed bookings, not by ch
 
 ## Meet the agents
 
-```mermaid
-flowchart LR
-    T([Traveller brief]) --> O{{Orchestrator}}
-    O --> A1[1. Intent]
-    A1 --> A2[2. Discovery]
-    A2 --> A3[3. Journey builder]
-    A3 --> A4[4. Verifier]
-    A4 --> A5[5. Booking coordinator]
-    E[(Deterministic engine<br/>prices, scores, checks)] -. numbers .-> A2
-    E -. numbers .-> A3
-    E -. rules .-> A4
-    A5 --> H([Human approval])
-    H --> S([Supplier requests sent])
-```
+<div align="center">
+<img src="docs/assets/agents.svg" alt="Five agents run in sequence on top of a deterministic engine, then a person approves" width="100%">
+</div>
 
 | # | Agent | What it does | What it may not do |
 |---|---|---|---|
@@ -77,6 +90,30 @@ Try the default brief: *"First safari for two in December. Big wildlife, comfort
 4. **Verifier** checks each option: over budget fails, thin headroom and long transfers are noted, and **every option is flagged "no supplier confirmation yet"**.
 5. **Booking coordinator** drafts quote requests for the recommended trip, such as "Mara camp" and "Safari vehicle and guide". Nothing is sent.
 6. You press **Request this trip**. The request is saved, and a person verifies suppliers before anything is bought.
+
+## A trip the agents might hand you
+
+*An illustration of the format, using the demo rates. This is not a quote, and every number is an estimate until a supplier confirms it.*
+
+**Eight days in Kenya for two travellers: Maasai Mara and Amboseli**
+
+| Day | Plan |
+|---|---|
+| 1 | Arrive in Nairobi. Briefing and an early night. |
+| 2 to 4 | Maasai Mara. Camp stay with morning and afternoon game drives. |
+| 5 | Travel to Amboseli. |
+| 6 to 7 | Amboseli. Game drives with the mountain on the horizon. |
+| 8 | Return to Nairobi and onward flights. |
+
+| Cost line | Estimated |
+|---|---|
+| Internal flights | $600 |
+| Lodges | $4,200 |
+| Parks and activities | $1,600 |
+| Guide and transfers | $1,600 |
+| **Total** | **$8,000** |
+
+**What the Verifier adds:** within a $9,000 budget, with about $1,000 of headroom. Long transfer from Nairobi: confirm schedules and leave a buffer. No supplier confirmation yet, so this cannot be booked until suppliers reply.
 
 ## Honest status: what is real and what is not
 
@@ -130,6 +167,9 @@ A free Hobby account is for non-commercial use. Use a paid plan for anything com
 
 ## How it is built
 
+<details>
+<summary><b>Show the code map and design choices</b></summary>
+
 ```text
 app/
   page.tsx                landing page
@@ -142,7 +182,7 @@ lib/
   data.ts                 demonstration destinations and rates (replace with real quotes)
   types.ts                Zod schemas and shared types
 scripts/test-engine.ts    nine engine tests
-docs/                     application notes and photo credits
+docs/                     application notes, photo credits, README artwork
 ```
 
 A few choices worth knowing:
@@ -151,6 +191,8 @@ A few choices worth knowing:
 - **Untrusted text stays data.** Traveller text is wrapped and the agents are told to ignore instructions inside it. Narratives are checked by the verifier for unsupported claims, and removed if flagged.
 - **Fail soft.** A model error degrades one step to rules and says so. The traveller still gets a result.
 - **Light dependencies.** Next.js, React, the AI SDK, the Anthropic provider and Zod.
+
+</details>
 
 ## Safety and cost controls
 
@@ -174,6 +216,9 @@ The commercial proof the project is working toward: real trip briefs, suppliers 
 
 ## Troubleshooting
 
+<details>
+<summary><b>Show the problems people actually hit</b></summary>
+
 These are the problems people actually hit.
 
 | Symptom | Cause and fix |
@@ -184,6 +229,8 @@ These are the problems people actually hit.
 | `npm run test` fails with module errors | Use `tsx` (`"test": "tsx scripts/test-engine.ts"`). Run `npm i -D tsx` if it is missing. |
 | Vercel build cannot find `package.json` | Set **Settings, General, Root Directory** to the folder that contains it, then redeploy. |
 | Requests say "Not stored" | Add the Upstash integration and redeploy. Until then requests appear in the function logs. |
+
+</details>
 
 ## Where it could go: a gallery
 
