@@ -11,5 +11,6 @@ export async function POST(req: Request) {
   if (url && token) {
     try { const r = await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${token}` }, body: JSON.stringify(["LPUSH", "wayfarer:requests", record]) }); saved = r.ok; } catch { saved = false; }
   } else { console.log("TRIP_REQUEST", record); }
-  return Response.json({ ok: true, id, saved, note: saved ? "Saved." : "Not stored: set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN to persist requests. The request is in the function logs." });
+  const support = { name: process.env.SUPPORT_NAME || "", email: process.env.SUPPORT_EMAIL || "", window: process.env.SUPPORT_RESPONSE_WINDOW || "" };
+  return Response.json({ ok: true, id, saved, support, note: saved ? "Saved." : "Not stored: set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN to persist requests. The request is in the function logs." });
 }

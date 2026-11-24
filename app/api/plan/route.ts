@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export const maxDuration = 120;
 
 const Input = z.object({ text: z.string().min(5).max(1000), budgetUsd: z.number().min(500).max(200000),
-  travellers: z.number().int().min(1).max(12), nights: z.number().int().min(3).max(21), priority: Priority });
+  travellers: z.number().int().min(1).max(12), nights: z.number().int().min(3).max(21), priority: Priority, origin: z.string().max(80).optional(), passport: z.string().max(60).optional() });
 
 // Best-effort per-instance limiter. Use Vercel WAF or BotID for real protection before public launch.
 const hits = new Map<string, number[]>();

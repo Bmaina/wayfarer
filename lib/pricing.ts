@@ -48,7 +48,20 @@ export function verify(p: Proposal, b: TripBrief): { ok: boolean; issues: string
   if (p.total > b.budgetUsd) issues.push(`Estimated total is $${p.total - b.budgetUsd} over budget.`);
   if (p.headroom >= 0 && p.headroom < b.budgetUsd * 0.05) notes.push("Less than 5% budget headroom: any price change could break the budget.");
   if (p.hoursFromNairobi > 7) notes.push("Long transfer from Nairobi: confirm schedules and a buffer for delays.");
+  notes.push(`International flights from ${b.origin || "your departure city"} to Nairobi are not priced or searched here. Confirm flights separately.`);
   notes.push("No supplier quote or availability confirmation yet. This cannot be booked until suppliers confirm.");
   if (p.mode === "package") notes.push("Package flexibility is an assumption (fixed dates). Confirm change and cancellation terms.");
   return { ok: issues.length === 0, issues, notes };
+}
+
+// Counterfactuals: how the recommendation would change. Deterministic, computed by the same engine.
+export function whatIf(b: TripBrief): string[] {
+  const top = (x: TripBrief) => [...priceAll(x)].sort((p, q) => q.score - p.score)[0];
+  const label = (p: Proposal) => `${p.destName.split(",")[0]} (${p.mode === "assembled" ? "assembled" : "package"})`;
+  const base = top(b), out: string[] = [];
+  for (const d of [-2, 2, 3]) { const n = b.nights + d; if (n < 3 || n > 21) continue; const t = top({ ...b, nights: n }); if (t.id !== base.id) out.push(`With ${n} nights instead of ${b.nights}, the top option becomes ${label(t)} at about $${t.total.toLocaleString("en-US")}.`); }
+  for (const t of [b.travellers - 1, b.travellers + 1]) { if (t < 1 || t > 12) continue; const r = top({ ...b, travellers: t }); if (r.id !== base.id) out.push(`With ${t} traveller${t > 1 ? "s" : ""}, the top option becomes ${label(r)}.`); }
+  for (const pr of ["cost", "time", "flex"] as const) { if (pr === b.priority) continue; const r = top({ ...b, priority: pr }); if (r.id !== base.id) out.push(`If you prioritised ${pr === "cost" ? "lowest cost" : pr === "time" ? "least travel time" : "flexibility"}, it would be ${label(r)}.`); }
+  if (base.total > b.budgetUsd) out.push(`The top option needs about $${(base.total - b.budgetUsd).toLocaleString("en-US")} more than your budget.`);
+  return out.slice(0, 4);
 }

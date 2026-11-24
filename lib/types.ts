@@ -11,6 +11,8 @@ export const TripBrief = z.object({
   month: z.string().max(40).describe("Travel month or window as the traveller said it, or empty"),
   interests: z.array(z.string().max(60)).max(8),
   summary: z.string().max(400),
+  origin: z.string().max(80).default("").describe("Departure city, or empty"),
+  passport: z.string().max(60).default("").describe("Passport country, or empty"),
 });
 export type TripBrief = z.infer<typeof TripBrief>;
 
@@ -35,6 +37,7 @@ export const TripRequest = z.object({
   name: z.string().min(1).max(120), email: z.string().email().max(200),
   window: z.string().max(120).optional(), notes: z.string().max(1000).optional(),
   wouldBook: z.string().max(80).optional(), worry: z.string().max(400).optional(),
+  stuck: z.string().max(400).optional(), creatorRef: z.string().max(60).optional(),
   brief: TripBrief, proposalId: z.string().max(80), destName: z.string().max(120),
   mode: z.enum(["assembled", "package"]), estimatedTotal: z.number(), drafts: z.array(z.string().max(4000)).max(6).optional(),
 });

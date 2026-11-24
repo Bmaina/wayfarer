@@ -122,6 +122,11 @@ Try the default brief: *"First safari for two in December. Big wildlife, comfort
 | Five-agent pipeline with tool loops and schema-checked output | **Real**, runs against the Claude API |
 | Pricing, scoring and verification engine | **Real**, unit tested |
 | Streaming agent-activity UI | **Real** |
+| Entry-requirement panels | **Real links** to official government portals for Kenya, Tanzania and Rwanda, with a checked date. WAYFARER does not decide who may enter a country |
+| Departure city | **Captured and noted.** International flights from it are not priced or searched yet |
+| Shareable proposals | **Real.** The proposal travels in the link itself, with no personal data and nothing stored |
+| "What would change this?" explanations | **Real**, computed by the pricing engine |
+| Creator deep links | **Real.** `/plan?dest=ke&nights=8&budget=9000&origin=Chicago&ref=creatorname` opens the desk pre-filled |
 | Request capture and storage | **Real** (stores to Upstash Redis when configured, otherwise logs) |
 | Input validation and a best-effort rate limit | **Real** |
 | Supplier rates, seasons and availability | **Placeholder.** Every figure in `lib/data.ts` is demonstration data |
@@ -154,6 +159,7 @@ Open the app, go to **Plan a trip**, and run the agents. The badge in the activi
 | `ANTHROPIC_WORKSPACE_ID` | If your key needs it | Adds the workspace header for keys not scoped to one workspace. |
 | `ANTHROPIC_AUTH_MODE` | No | Set to `x-api-key` to use the legacy header instead of a bearer token. |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | No | Persist trip requests. Added automatically by the Upstash integration on Vercel. |
+| `SUPPORT_NAME`, `SUPPORT_EMAIL`, `SUPPORT_RESPONSE_WINDOW` | No | Who the traveller hears from after a request, shown on the confirmation. |
 
 ## Deploy on Vercel
 
@@ -173,12 +179,18 @@ A free Hobby account is for non-commercial use. Use a paid plan for anything com
 ```text
 app/
   page.tsx                landing page
-  plan/page.tsx           the agent desk: form, live agent activity, proposals, request form
+  plan/page.tsx           the agent desk: form, live agent activity, proposals, entry rules, share, request form
+  share/page.tsx          read-only shared proposal, decoded from the link
+components/parts.tsx      photo with credit, entry-requirements panel
+public/                   banner and route map
   api/plan/route.ts       streams agent events as newline-delimited JSON; validates input; rate limits
   api/request/route.ts    validates and stores a trip request
 lib/
   agents.ts               the five agents and the orchestrator
-  pricing.ts              deterministic pricing, scoring and verification
+  pricing.ts              deterministic pricing, scoring, verification and what-if explanations
+  entry.ts                official entry-requirement sources (checked dates)
+  photos.ts               Wikimedia Commons photos with credits
+  share.ts                share-link encoding
   data.ts                 demonstration destinations and rates (replace with real quotes)
   types.ts                Zod schemas and shared types
 scripts/test-engine.ts    nine engine tests
