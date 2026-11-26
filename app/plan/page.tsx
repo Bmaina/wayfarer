@@ -25,7 +25,7 @@ export default function Plan() {
     const q = new URLSearchParams(window.location.search); const n = (k: string, d: number) => { const v = Number(q.get(k)); return v > 0 ? v : d; };
     const dest = q.get("dest") ?? ""; setFocus(NAMES[dest] ? dest : ""); setRef((q.get("ref") ?? "").slice(0, 60));
     setF((p) => ({ ...p, budget: n("budget", p.budget), trav: n("trav", p.trav), nights: n("nights", p.nights), origin: (q.get("origin") ?? "").slice(0, 80),
-      text: NAMES[dest] ? `I saw ${NAMES[dest]} and I want to go. Make this trip happen for ${n("trav", p.trav)} traveller(s), ${n("nights", p.nights)} nights.` : p.text }));
+      text: (q.get("text") ?? "").slice(0, 1000) || (NAMES[dest] ? `I saw ${NAMES[dest]} and I want to go. Make this trip happen for ${n("trav", p.trav)} traveller(s), ${n("nights", p.nights)} nights.` : p.text) }));
   }, []);
 
   async function run(e: React.FormEvent) {
