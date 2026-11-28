@@ -24,8 +24,17 @@ export function commissionEarned(d: Dest, mode: Mode, b: Pick<TripBrief, "travel
 
 const W: Record<Priority, [number, number, number]> = { cost: [0.7, 0.15, 0.15], time: [0.2, 0.6, 0.2], flex: [0.2, 0.15, 0.65] };
 
+// Which kinds of destination fit the brief. A safari brief never ranks beach resorts, and a beach brief never ranks safaris.
+export function wantedKinds(b: Pick<TripBrief, "summary" | "interests">): Set<"safari" | "beach"> {
+  const t = `${b.summary} ${b.interests.join(" ")}`.toLowerCase();
+  const beach = /(beach|island|snorkel|scuba|diving|zanzibar|seychelles|maldives|overwater|coast)/.test(t);
+  const safari = /(safari|wildlife|game drive|gorilla|big five|migration|mara|serengeti|ngorongoro|amboseli|akagera|volcano|kenya|rwanda)/.test(t);
+  const k = new Set<"safari" | "beach">(); if (beach) k.add("beach"); if (safari || !beach) k.add("safari"); return k;
+}
+
 export function priceAll(b: TripBrief): Proposal[] {
-  const raw = DESTINATIONS.flatMap((d) =>
+  const kinds = wantedKinds(b);
+  const raw = DESTINATIONS.filter((d) => kinds.has(d.kind)).flatMap((d) =>
     (["assembled", "package"] as Mode[]).map((mode) => {
       const lines: Line[] = mode === "assembled" ? assembledLines(d, b)
         : [{ label: d.packageName, amount: packageTotal(d, b), status: "estimated" as const }];
@@ -63,5 +72,8 @@ export function whatIf(b: TripBrief): string[] {
   for (const t of [b.travellers - 1, b.travellers + 1]) { if (t < 1 || t > 12) continue; const r = top({ ...b, travellers: t }); if (r.id !== base.id) out.push(`With ${t} traveller${t > 1 ? "s" : ""}, the top option becomes ${label(r)}.`); }
   for (const pr of ["cost", "time", "flex"] as const) { if (pr === b.priority) continue; const r = top({ ...b, priority: pr }); if (r.id !== base.id) out.push(`If you prioritised ${pr === "cost" ? "lowest cost" : pr === "time" ? "least travel time" : "flexibility"}, it would be ${label(r)}.`); }
   if (base.total > b.budgetUsd) out.push(`The top option needs about $${(base.total - b.budgetUsd).toLocaleString("en-US")} more than your budget.`);
-  return out.slice(0, 4);
+  if (wantedKinds(b).has("safari") && !wantedKinds(b).has("beach")) {
+    const z = DESTINATIONS.find((d) => d.id === "zz"); if (z) { const t = assembledLines(z, { travellers: b.travellers, nights: 3 }).reduce((s, l) => s + l.amount, 0); out.push(`Add 3 beach nights in Zanzibar after the safari: about +$${t.toLocaleString("en-US")} (estimated).`); }
+  }
+  return out.slice(0, 5);
 }

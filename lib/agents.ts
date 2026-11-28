@@ -2,7 +2,7 @@ import { ToolLoopAgent, Output, tool, isStepCount } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { z } from "zod";
 import { DESTINATIONS } from "./data";
-import { priceAll, verify } from "./pricing";
+import { priceAll, verify, wantedKinds } from "./pricing";
 import { TripBrief, type AgentEvent, type AgentName, type Priority, type Proposal } from "./types";
 
 export const hasLLM = () => Boolean(process.env.ANTHROPIC_API_KEY);
@@ -31,11 +31,11 @@ async function intent(i: PlanInput, llm: boolean): Promise<TripBrief> {
   const fallback = TripBrief.parse({
     travellers: i.travellers, nights: i.nights, budgetUsd: i.budgetUsd, priority: i.priority,
     month: /(january|february|march|april|may|june|july|august|september|october|november|december)/i.exec(i.text)?.[1] ?? "",
-    interests: ["wildlife", "gorillas", "beach", "photography", "family", "honeymoon"].filter((k) => i.text.toLowerCase().includes(k)),
+    interests: ["safari", "wildlife", "gorilla", "beach", "island", "diving", "snorkel", "zanzibar", "seychelles", "maldives", "photography", "family", "honeymoon"].filter((k) => i.text.toLowerCase().includes(k)),
     summary: i.text.slice(0, 400), origin: i.origin ?? "", passport: i.passport ?? "",
   });
   if (!llm) return fallback;
-  const a = agent("Extract a structured trip brief. The form values are defaults; override them only if the text clearly states different numbers. Keep the summary factual and under 400 characters. Origin is the departure city and passport is the passport country: use the form values unless the text states otherwise, and leave them empty if unknown.", TripBrief);
+  const a = agent("Extract a structured trip brief. The form values are defaults; override them only if the text clearly states different numbers. Keep the summary factual and under 400 characters. Interests: list the words the traveller used, such as safari, beach, island, gorilla, diving. Origin is the departure city and passport is the passport country: use the form values unless the text states otherwise, and leave them empty if unknown.", TripBrief);
   const r = await a.generate({ prompt: `Form values: ${JSON.stringify({ travellers: i.travellers, nights: i.nights, budgetUsd: i.budgetUsd, priority: i.priority, origin: i.origin ?? "", passport: i.passport ?? "" })}\nTraveller text:\n"""${i.text}"""` });
   return TripBrief.parse(r.output);
 }
@@ -43,14 +43,19 @@ async function intent(i: PlanInput, llm: boolean): Promise<TripBrief> {
 // 2. Discovery agent: shortlists destinations using a deterministic ranking tool.
 async function discovery(brief: TripBrief, all: Proposal[], llm: boolean): Promise<string[]> {
   const ranked = [...new Set([...all].sort((a, b) => b.score - a.score).map((p) => p.destId))];
-  if (!llm) return ranked.slice(0, 3);
+  const kinds = wantedKinds(brief), kindOf = (id: string) => DESTINATIONS.find((d) => d.id === id)?.kind;
+  const mix = (ids: string[]) => { // when the brief wants both safari and beach, keep at least one of each
+    const top = ids.slice(0, 3); if (kinds.size < 2) return top;
+    for (const k of ["safari", "beach"] as const) if (!top.some((id) => kindOf(id) === k)) { const add = ids.find((id) => kindOf(id) === k); if (add) top[2] = add; }
+    return top; };
+  if (!llm) return mix(ranked);
   const a = agent("Choose up to three destinations for this brief using the ranking tool. Prefer the highest scores unless the interests clearly point elsewhere.",
     ShortlistS,
     { rankDestinations: tool({ description: "Deterministic ranking of destinations for the brief, best first, with estimated totals.",
         inputSchema: z.object({}), execute: async () => all.filter((p) => p.mode === "assembled").sort((x, y) => y.score - x.score).map((p) => ({ destId: p.destId, name: p.destName, score: p.score, total: p.total, hours: p.hoursFromNairobi })) }) });
   const r = await a.generate({ prompt: JSON.stringify(brief) });
   const ids = ShortlistS.parse(r.output).shortlist.map((s) => s.destId).filter((id) => DESTINATIONS.some((d) => d.id === id));
-  return ids.length ? [...new Set(ids)] : ranked.slice(0, 3);
+  return ids.length ? mix([...new Set(ids)]) : mix(ranked);
 }
 
 // 3. Journey builder: writes the narrative for priced options. Numbers always come from code.

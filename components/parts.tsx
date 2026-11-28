@@ -8,7 +8,7 @@ export function Photo({ destId, tall }: { destId: string; tall?: boolean }) {
   return (<figure className="photo">
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img src={p.url} alt={p.alt} loading="lazy" style={tall ? { height: 260 } : undefined} />
-    <figcaption>Photo: {p.author}, {p.licence}, via <a href={p.page} target="_blank" rel="noopener noreferrer">Wikimedia Commons</a></figcaption>
+    <figcaption>Photo: {p.author}, <a href={p.page} target="_blank" rel="noopener noreferrer">{p.licence}</a></figcaption>
   </figure>);
 }
 

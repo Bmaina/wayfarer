@@ -7,7 +7,7 @@ import { EntryPanel, Photo, usd } from "@/components/parts";
 
 const ORDER: AgentName[] = ["Intent", "Discovery", "Journey builder", "Verifier", "Booking coordinator"];
 interface Result { brief: TripBrief; proposals: Proposal[]; recommendedId: string | null; drafts: { supplierRole: string; subject: string; body: string }[]; mode: "llm" | "rules" }
-const NAMES: Record<string, string> = { ke: "Masai Mara and Amboseli", tz: "Serengeti and Ngorongoro", rw: "Volcanoes and Akagera" };
+const NAMES: Record<string, string> = { ke: "Masai Mara and Amboseli", tz: "Serengeti and Ngorongoro", rw: "Volcanoes and Akagera", zz: "Zanzibar", sc: "Seychelles", mv: "Maldives" };
 
 export default function Plan() {
   const [f, setF] = useState({ text: "First safari for two in December. We want big wildlife, comfortable lodges and no logistics to manage. Open to any country in East Africa.", budget: 9000, trav: 2, nights: 8, prio: "cost", origin: "", passport: "" });

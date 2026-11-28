@@ -6,7 +6,7 @@ const AGENTS = [
   ["Verifier", "Checks budget, logistics and unsupported claims. Rejects what fails."],
   ["Booking coordinator", "Prepares supplier quote requests. Humans approve before anything is sent or paid."],
 ];
-const TRIPS = [["ke", "Masai Mara and Amboseli", "Kenya"], ["tz", "Serengeti and Ngorongoro", "Tanzania"], ["rw", "Volcanoes and Akagera", "Rwanda"]];
+const TRIPS = [["ke", "Masai Mara and Amboseli", "Kenya"], ["tz", "Serengeti and Ngorongoro", "Tanzania"], ["rw", "Volcanoes and Akagera", "Rwanda"], ["zz", "Zanzibar", "Tanzania"], ["sc", "Seychelles", "Seychelles"], ["mv", "Maldives", "Maldives"]];
 export default function Home() {
   return (<main>
     <div className="hero"><img src="/banner.svg" alt="WAYFARER: a savanna sunset with an acacia tree" /></div>
@@ -15,7 +15,7 @@ export default function Home() {
     <p className="chips"><a className="btn" href="/plan">Plan a trip</a><a className="btn alt" href="/plan?dest=ke">Start from the Mara</a></p>
     <h2 style={{ marginTop: 36 }}>Start from a place</h2>
     <div className="grid">{TRIPS.map(([id, name, country]) => { const p = PHOTOS[id]; return (<a key={id} href={`/plan?dest=${id}`} className="card" style={{ textDecoration: "none", color: "inherit" }}>
-      <figure className="photo"><img src={p.url} alt={p.alt} loading="lazy" /><figcaption>Photo: {p.author}, {p.licence}, via Wikimedia Commons</figcaption></figure>
+      <figure className="photo"><img src={p.url} alt={p.alt} loading="lazy" /><figcaption>Photo: {p.author}, {p.licence}</figcaption></figure>
       <b>{name}</b><div className="muted">{country}. Plan this trip</div></a>); })}</div>
     <h2 style={{ marginTop: 36 }}>Five agents, one deterministic core</h2>
     <div className="grid">{AGENTS.map(([n, d]) => (<div className="card" key={n}><b>{n}</b><p className="muted">{d}</p></div>))}</div>

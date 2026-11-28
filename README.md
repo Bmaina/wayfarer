@@ -123,6 +123,7 @@ Try the default brief: *"First safari for two in December. Big wildlife, comfort
 | Pricing, scoring and verification engine | **Real**, unit tested |
 | Streaming agent-activity UI | **Real** |
 | Entry-requirement panels | **Real links** to official government portals for Kenya, Tanzania and Rwanda, with a checked date. WAYFARER does not decide who may enter a country |
+| Beach add-ons (Zanzibar, Seychelles, Maldives) | **Real in the engine**, on placeholder rates. A safari brief never ranks beach resorts, a beach brief never ranks safaris, and a safari brief gets a computed Zanzibar extension estimate. Combined bush-and-beach itineraries are not built yet |
 | Departure city | **Captured and noted.** International flights from it are not priced or searched yet |
 | Shareable proposals | **Real.** The proposal travels in the link itself, with no personal data and nothing stored |
 | "What would change this?" explanations | **Real**, computed by the pricing engine |
