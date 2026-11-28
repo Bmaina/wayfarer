@@ -12,9 +12,9 @@
 
 <div align="center">
 
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeests_in_the_Masaai_Mara.jpg?width=800" alt="Wildebeest in the Maasai Mara" width="100%">
+<img src="docs/images/mara-zebras.jpg" alt="Zebras and wildebeest on the Maasai Mara plains" width="100%">
 
-<sub>Photo: DEMOSH, via <a href="https://commons.wikimedia.org/wiki/File:Wildebeests_in_the_Masaai_Mara.jpg">Wikimedia Commons</a>, Creative Commons licence (see file page)</sub>
+<sub>Photo: Pexels</sub>
 
 </div>
 
@@ -195,7 +195,7 @@ lib/
   data.ts                 demonstration destinations and rates (replace with real quotes)
   types.ts                Zod schemas and shared types
 scripts/test-engine.ts    nine engine tests
-docs/                     application notes, photo credits, README artwork
+docs/                     application notes, photo credits, README artwork and images
 ```
 
 A few choices worth knowing:
@@ -251,18 +251,23 @@ These are the places WAYFARER is built to plan.
 
 <table>
 <tr>
-<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeests_in_the_Masaai_Mara.jpg?width=800" alt="Wildebeest in the Maasai Mara" width="100%"><br><sub><b>Wildebeest in the Maasai Mara</b><br>Photo: DEMOSH, Creative Commons, via <a href="https://commons.wikimedia.org/wiki/File:Wildebeests_in_the_Masaai_Mara.jpg">Wikimedia Commons</a></sub></td>
-<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeest-during-Great-Migration.JPG?width=800" alt="Wildebeest after crossing the Mara River" width="100%"><br><sub><b>Wildebeest after crossing the Mara River</b><br>Photo: Bjørn Christian Tørrissen, see file page, via <a href="https://commons.wikimedia.org/wiki/File:Wildebeest-during-Great-Migration.JPG">Wikimedia Commons</a></sub></td>
-<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg?width=800" alt="Elephants against Mount Kilimanjaro at Amboseli" width="100%"><br><sub><b>Elephants and Mount Kilimanjaro, Amboseli</b><br>Photo: Amoghavarsha JS, see file page, via <a href="https://commons.wikimedia.org/wiki/File:Elephants_at_Amboseli_national_park_against_Mount_Kilimanjaro.jpg">Wikimedia Commons</a></sub></td>
+<td width="33%" valign="top"><img src="docs/images/mara-crossing.jpg" alt="Wildebeest crossing a river in the Maasai Mara" width="100%"><br><sub><b>Maasai Mara, Kenya</b><br>The river crossing</sub></td>
+<td width="33%" valign="top"><img src="docs/images/amboseli-kili.jpg" alt="A giraffe below Mount Kilimanjaro" width="100%"><br><sub><b>Amboseli, Kenya</b><br>Giraffe beneath Kilimanjaro</sub></td>
+<td width="33%" valign="top"><img src="docs/images/serengeti-lion.jpg" alt="A lioness walking through the Serengeti grass" width="100%"><br><sub><b>Serengeti, Tanzania</b><br>Big cats on open plains</sub></td>
 </tr>
 <tr>
-<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kilimanjaro_from_Amboseli.jpg?width=800" alt="Kilimanjaro seen from Amboseli National Park" width="100%"><br><sub><b>Kilimanjaro from Amboseli National Park</b><br>Photo: Sergey Pesterev, see file page, via <a href="https://commons.wikimedia.org/wiki/File:Kilimanjaro_from_Amboseli.jpg">Wikimedia Commons</a></sub></td>
-<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ngorongoro_Crater.jpg?width=800" alt="Ridge at the edge of the Ngorongoro Crater" width="100%"><br><sub><b>Ridge at the edge of the Ngorongoro Crater</b><br>Photo: William Warby, CC BY 2.0, via <a href="https://commons.wikimedia.org/wiki/File:Ngorongoro_Crater.jpg">Wikimedia Commons</a></sub></td>
-<td width="33%" valign="top"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/RwandaVolcanoAndLake_cropped2.jpg" alt="A volcano and lake in northwestern Rwanda" width="100%"><br><sub><b>A volcano and lake in northwestern Rwanda</b><br>Photo: Neil Palmer (CIAT), cropped by Amakuru, CC BY-SA 2.0, via <a href="https://commons.wikimedia.org/wiki/File:RwandaVolcanoAndLake_cropped2.jpg">Wikimedia Commons</a></sub></td>
+<td width="33%" valign="top"><img src="docs/images/ngoro-rhino.jpg" alt="A rhino grazing at Ngorongoro" width="100%"><br><sub><b>Ngorongoro, Tanzania</b><br>Inside the crater</sub></td>
+<td width="33%" valign="top"><img src="docs/images/rwanda-gorilla.jpg" alt="A mountain gorilla in the forest in Rwanda" width="100%"><br><sub><b>Volcanoes National Park, Rwanda</b><br>Mountain gorillas</sub></td>
+<td width="33%" valign="top"><img src="docs/images/serengeti-eleph-zebras.jpg" alt="Elephants and zebras under a big sky" width="100%"><br><sub><b>Serengeti, Tanzania</b><br>Elephants and zebras together</sub></td>
+</tr>
+<tr>
+<td width="33%" valign="top"><img src="docs/images/zanzibar-boats.jpg" alt="Boats on the shore in Zanzibar seen from above" width="100%"><br><sub><b>Zanzibar, Tanzania</b><br>The coast after the safari</sub></td>
+<td width="33%" valign="top"><img src="docs/images/seychelles-pristine.jpg" alt="A forested bay with boats in Seychelles seen from above" width="100%"><br><sub><b>Seychelles</b><br>Granite islands and turquoise bays</sub></td>
+<td width="33%" valign="top"><img src="docs/images/maldives-resort.jpg" alt="A resort island with overwater villas in the Maldives" width="100%"><br><sub><b>Maldives</b><br>Atolls and lagoons</sub></td>
 </tr>
 </table>
 
-> **Photo credits.** These photographs come from Wikimedia Commons and are linked, not copied into this repository. Each caption names the photographer and links to the Commons file page, which states the exact licence and any attribution wording. Where a caption says "see file page", I have not confirmed the licence version, so check that page before reusing a photo elsewhere. Details in [docs/PHOTO_CREDITS.md](docs/PHOTO_CREDITS.md). Captions follow the file descriptions on Commons.
+> **Photo credits.** Photographs from [Pexels](https://www.pexels.com), used under the [Pexels licence](https://www.pexels.com/license/). The photographers' names were not recorded when the images were collected, so add them to [docs/PHOTO_CREDITS.md](docs/PHOTO_CREDITS.md) if you want to credit them (appreciated, not required). Location labels follow the supplied file names and are unverified.
 
 ## FAQ
 
